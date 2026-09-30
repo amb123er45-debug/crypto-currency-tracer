@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title> website Fraud Exchange Tracer: from victim reports to cash-out points</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,600&family=IBM+Plex+Sans:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <header class="top">
+    <a class="brand" href="#">Fraud Exchange Tracer</a>
+    <nav>
+      <a href="#tracer">Tracer</a>
+      <a href="#method">Method</a>
+      <a href="#limits">Limits</a>
+    </nav>
+  </header>
+
+  <main>
+    <section class="hero" id="tracer">
+      <h1>Follow stolen crypto from a victim's report to the exchange that received it.</h1>
+      <p class="lead">Paste wallet addresses reported by victims. The tracer follows the funds across the blockchain and ranks the exchanges where they were deposited.</p>
+
+      <div class="panel">
+        <label for="addrs">Reported wallet addresses (one per line)</label>
+        <textarea id="addrs" rows="4" placeholder="0x... or bc1... or T..."></textarea>
+        <div class="actions">
+          <button id="run" class="primary">Trace addresses</button>
+          <button id="sample" class="ghost">Load sample addresses</button>
+        </div>
+        <p class="note">Demo mode: results are simulated from the address text. No real blockchain data is queried and no exchange is named.</p>
+        <p id="error" class="error" role="alert" hidden></p>
+      </div>
+
+      <div id="results" hidden>
+        <h2>Exchanges receiving reported funds</h2>
+        <div id="ranking"></div>
+        <h2>Fund paths</h2>
+        <div id="paths"></div>
+      </div>
+    </section>
+
+    <section id="method">
+      <h2>How it works</h2>
+      <ol class="steps">
+        <li><strong>Collect.</strong> Victim reports supply the first suspect wallet addresses and the amounts lost.</li>
+        <li><strong>Trace.</strong> A blockchain indexer follows outgoing transfers, including peel chains, consolidations and bridge hops.</li>
+        <li><strong>Cluster.</strong> Address-clustering heuristics group deposit addresses that share an owner, such as an exchange's hot wallets.</li>
+        <li><strong>Attribute.</strong> Clusters are matched to labelled exchange wallets, and each match gets a confidence score.</li>
+        <li><strong>Alert.</strong> New reports re-run the trace automatically, so a cash-out point is flagged while funds may still be frozen.</li>
+      </ol>
+    </section>
+
+    <section id="limits">
+      <h2>Limits and responsible use</h2>
+      <p>A deposit at an exchange shows where funds arrived, not that the exchange did anything wrong. Most exchanges cooperate with freeze requests. Results should go to investigators and the exchange's compliance team, not be published as accusations.</p>
+      <p>Victim reports can be mistaken or malicious, so every address needs a second source before action is taken. Attribution scores are estimates and can be wrong.</p>
+    </section>
+  </main>
+
+  <footer>Project prototype. Replace the simulated tracer in <code>script.js</code> with a real blockchain analytics API.</footer>
+  <script src="script.js"></script>
+</body>
+</html>
